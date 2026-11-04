@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ahorcado</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="juego">
+    <header>
+      <h1>💀 Ahorcado</h1>
+      <p class="subtitulo">Adivina la palabra antes de que se complete el dibujo.</p>
+    </header>
+
+    <section class="zona-dibujo">
+      <svg id="svg-ahorcado" viewBox="0 0 200 240" aria-hidden="true">
+        <!-- Base -->
+        <line class="estructura" x1="20"  y1="230" x2="100" y2="230" />
+        <line class="estructura" x1="60"  y1="230" x2="60"  y2="20"  />
+        <line class="estructura" x1="60"  y1="20"  x2="140" y2="20"  />
+        <line class="estructura" x1="140" y1="20"  x2="140" y2="45"  />
+        <!-- Cuerpo -->
+        <circle class="parte" data-fase="1" cx="140" cy="60" r="15" />
+        <line    class="parte" data-fase="2" x1="140" y1="75"  x2="140" y2="140" />
+        <line    class="parte" data-fase="3" x1="140" y1="90"  x2="115" y2="120" />
+        <line    class="parte" data-fase="4" x1="140" y1="90"  x2="165" y2="120" />
+        <line    class="parte" data-fase="5" x1="140" y1="140" x2="118" y2="180" />
+        <line    class="parte" data-fase="6" x1="140" y1="140" x2="162" y2="180" />
+        <!-- Cara -->
+        <line class="cara" data-fase="1" x1="134" y1="54" x2="146" y2="66" />
+        <line class="cara" data-fase="1" x1="146" y1="54" x2="134" y2="66" />
+      </svg>
+    </section>
+
+    <section class="estado">
+      <p class="intentos">
+        Intentos restantes:
+        <strong id="intentos">6</strong>
+      </p>
+      <p id="mensaje" class="mensaje" role="status" aria-live="polite"></p>
+    </section>
+
+    <section class="palabra" id="palabra" aria-label="Palabra a adivinar"></section>
+
+    <section class="teclado" id="teclado" aria-label="Teclado de letras"></section>
+
+    <footer>
+      <div class="acciones">
+        <button id="btn-nueva" type="button">Nueva palabra</button>
+        <button id="btn-config" class="secundario" type="button">⚙️ Palabras</button>
+      </div>
+      <p class="pista" id="pista"></p>
+    </footer>
+
+    <section class="panel-config" id="panel-config" hidden>
+      <h2>Palabras desde Google Sheets</h2>
+      <p class="ayuda">
+        Las palabras se cargan exclusivamente desde la hoja de cálculo.
+      </p>
+      <details class="ayuda-hoja">
+        <summary>¿Cómo debe estar la hoja de Google Sheets?</summary>
+        <div class="detalle">
+          <p>Publicá la hoja como CSV: <strong>Archivo → Compartir → Publicar en la web</strong> → Hoja completa → <strong>Valores separados por comas (.CSV)</strong> → Publicar.</p>
+          <p>La estructura aceptada:</p>
+          <table class="tabla-estructura">
+            <thead>
+              <tr><th>palabra</th><th>pista</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>guitarra</td><td>Instrumento de seis cuerdas</td></tr>
+              <tr><td>murciélago</td><td>Mamífero volador</td></tr>
+            </tbody>
+          </table>
+          <p>O también podés usar <code>palabras/clue/hint/word</code> como nombres de columna. El orden también funciona si la primera columna es la palabra y la segunda es la pista.</p>
+        </div>
+      </details>
+      <p class="ayuda">
+        URL fija de la hoja:
+      </p>
+      <div class="fila-hoja">
+        <input id="input-sheet" class="input-hoja" type="url" placeholder="https://docs.google.com/.../pub?...&output=csv" />
+        <button id="btn-cargar-hoja" class="secundario" type="button">Recargar desde hoja</button>
+      </div>
+      <p class="aviso" id="aviso-config" role="status" aria-live="polite"></p>
+      <div class="acciones-panel">
+        <button id="btn-restaurar" class="secundario" type="button">Recargar desde hoja</button>
+        <button id="btn-cerrar" class="secundario" type="button">Cerrar</button>
+      </div>
+    </section>
+  </main>
+
+  <script src="palabras.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
